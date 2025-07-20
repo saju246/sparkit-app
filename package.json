@@ -1,0 +1,20 @@
+{
+  "name": "sparkit",
+  "version": "1.0.0",
+  "description": "A modern social matching app where connections spark effortlessly.",
+  "main": "app.js",
+  "scripts": {
+    "start":"node src/app.js",
+    "dev":"nodemon src/app.js"
+  },
+  "keywords": [
+    "sparkIt",
+    "nodejs",
+    "javascript"
+  ],
+  "author": "sajuu",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
