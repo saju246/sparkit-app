@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+const User = require('../models/user')
 const { validationResult } = require('express-validator');
 
 const validateRequest = (req, res, next) => {
@@ -26,5 +28,21 @@ const checkInvalidFields = (allowedFields) => {
 
 
 
+const verifyToken = async (req, res, next) => {
+    try {
+        const token = req.cookies.token;
+        if (!token) return res.status(401).send('No token, authorization denied');
 
-module.exports = {validateRequest,checkInvalidFields};
+        const decoded = await jwt.verify(token, process.env.JWT_SECRET   );
+        req.user = await User.findById(decoded._id).select('-password');
+
+        if (!req.user) return res.status(401).send('User not found');
+
+        next();
+    } catch (error) {
+        console.error(error.message);
+        res.status(401).send('Token is not valid');
+    }
+};
+
+module.exports = { verifyToken ,validateRequest,checkInvalidFields};

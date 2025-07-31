@@ -1,13 +1,23 @@
 const express = require("express");
 const app = express();
 const { connectDB } = require("../config/database");
-const userRoutes = require('../routes/userRoutes');
 require('dotenv').config();
+const cookieParser = require('cookie-parser')
+
+
+const authRoutes = require('../routes/authRoutes');
+const profileRoutes = require('../routes/profileRoutes')
+const requestRouter = require('../routes/requestRoutes')
 
 const port = process.env.PORT;
 
 app.use(express.json());
-app.use('/',userRoutes);
+app.use(cookieParser())
+
+
+app.use('/',authRoutes);
+app.use('/profile',profileRoutes);
+app.use('/request',requestRouter);
 
 
 connectDB()
@@ -20,3 +30,4 @@ connectDB()
   .catch((error) => {
     console.error(" Database Connection Failed:", error);
   });
+
