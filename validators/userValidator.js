@@ -19,8 +19,8 @@ const loginValidation = [
 ]
 
 
-const updateUserValidation = [
-    body('userId').notEmpty().withMessage('UserId isRequired'),
+const editProfileValidation = [
+     body('firstName').optional().isLength({min:4,max:50}).withMessage('First Name Should Be 4-50 Characters'),
     body('photoUrl').optional().isURL().withMessage('Invalid Photo URL'),
     body('about').optional().isString(),
     body('gender').optional().isIn(['male','female','other']),
@@ -33,4 +33,8 @@ const updateUserValidation = [
     }),
 ];
 
-module.exports = {signupValidation,loginValidation,updateUserValidation}
+const changePasswordValidation = [
+     body('password').isStrongPassword().withMessage('Weak Password')
+]
+
+module.exports = {signupValidation,loginValidation,editProfileValidation,changePasswordValidation}
